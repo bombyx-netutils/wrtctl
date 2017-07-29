@@ -30,8 +30,11 @@ def cmdShow():
 
     print("Router Information:")
     if True:
-        print("    Hostname: " + info["cascade"]["router-list"][info["cascade"]["my-id"]].get("hostname", "None"))
-        print("    UUID:     " + info["cascade"]["my-id"])
+        if "hostname" in info:
+            print("    Hostname: " + info["hostname"])
+        else:
+            print("    Hostname: None")
+        print("    UUID:     " + info["uuid"])
     print("")
 
     print("Internet Connection:")
@@ -68,7 +71,7 @@ def cmdShow():
         for name, item in info["tfac-group"].items():
             print("    %s: %d, %s" % (name, item["priority"], ",".join(item["facilities"])))
 
-    while True:
+    while "cascade" in info:
         myData = info["cascade"]["router-list"][info["cascade"]["my-id"]]
         if "parent" not in myData:
             break
@@ -85,7 +88,7 @@ def cmdShow():
         print("")
         break
 
-    while True:
+    while "cascade" in info:
         downstreamIdList = []
         for routerId, routerData in info["cascade"]["router-list"].items():
             if routerData.get("parent", None) == info["cascade"]["my-id"]:
@@ -104,22 +107,25 @@ def cmdShow():
         break
 
     print("Clients:")
-    for routerId, routerData in info["cascade"]["router-list"].items():
-        if "client-list" in routerData:
-            if "hostname" in routerData:
-                routerName = "%s(%s)" % (routerData["hostname"], routerId)
-            else:
-                routerName = routerId
-            print("    " + routerName + ":")
-            if len(routerData["client-list"]) == 0:
-                print("        No client.")
-            else:
-                for clientIp, clientData in routerData["client-list"].items():
-                    if "hostname" in clientData:
-                        clientName = "%s(%s)" % (clientData["hostname"], clientIp)
-                    else:
-                        clientName = clientIp
-                    print("        " + clientName)
+    if "cascade" in info:
+        for routerId, routerData in info["cascade"]["router-list"].items():
+            if "client-list" in routerData:
+                if "hostname" in routerData:
+                    routerName = "%s(%s)" % (routerData["hostname"], routerId)
+                else:
+                    routerName = routerId
+                print("    " + routerName + ":")
+                if len(routerData["client-list"]) == 0:
+                    print("        No client.")
+                else:
+                    for clientIp, clientData in routerData["client-list"].items():
+                        if "hostname" in clientData:
+                            clientName = "%s(%s)" % (clientData["hostname"], clientIp)
+                        else:
+                            clientName = clientIp
+                        print("        " + clientName)
+    else:
+        print("Not implemented yet.")
     print("")
 
 
