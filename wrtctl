@@ -68,8 +68,8 @@ def cmdShow():
 
     if len(info["tfac-group"]) > 0:
         print("Traffic Facility Groups:")
-        for name, item in info["tfac-group"].items():
-            print("    %s: %d, %s" % (name, item["priority"], ",".join(item["facilities"])))
+        for name in info["tfac-group"].keys():
+            print("    %s" % (name))
 
     while "cascade" in info:
         myData = info["cascade"]["router-list"][info["cascade"]["my-id"]]
