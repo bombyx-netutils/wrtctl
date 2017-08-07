@@ -70,6 +70,7 @@ def cmdShow():
         print("Traffic Facility Groups:")
         for name in info["tfac-group"].keys():
             print("    %s" % (name))
+        print("")
 
     while "cascade" in info:
         myData = info["cascade"]["router-list"][info["cascade"]["my-id"]]
