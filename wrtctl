@@ -60,11 +60,11 @@ def cmdShow():
             print("    " + item)
         print("")
 
-    if len(info["lan-service"]) > 0:
-        print("LAN Services:")
-        for item in info["lan-service"]:
-            print("    localhost: " + item)
-        print("")
+    # if len(info["lan-service"]) > 0:
+    #     print("LAN Services:")
+    #     for item in info["lan-service"]:
+    #         print("    localhost: " + item)
+    #     print("")
 
     if len(info["tfac-group"]) > 0:
         print("Traffic Facility Groups:")
